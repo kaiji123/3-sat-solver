@@ -2,7 +2,7 @@ clauses of smaller size are more important and try to make the first assignment 
 you don't want to leave the truthful assignment for the last
 it is also like independent set problem - but we think it is inefficient, we can give counterexample that sat is not independent set but is satisfiable
 once you make first truthful assignment eg x1 remove all the clause that has x1 in it, for the clauses that have !x1, we keep it but trim it to make a shorter clause, then we look for shortest clause and try to make the first assignment truthful
-try to count the number of negatives and positives if the number of variables in clauses are equal, in order words choose the one variable that has most truth values on shortest level
+try to count the number of negatives and positives if the length clauses are equal, in order words choose the one variable that has most truth values on shortest level
 
 
 we will also assume the minimality of clauses meaning one variable can only have positive and negative once 

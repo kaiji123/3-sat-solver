@@ -4,15 +4,15 @@ from pysat.solvers import Solver, Minisat22
 # Create a CNF formula
 formula = CNF()
 
-# Add clauses to the formula
-clause1 = [1, 2, -3]
-clause2 = [-1, 3, -4]
-clause3 = [1, 3, -4]
-print(formula.clauses ==[])
-formula.append(clause1)
-formula.append(clause2)
-formula.append(clause3)
-print(formula.clauses ==[])
+# # Add clauses to the formula
+# clause1 = [1, 2, -3]
+# clause2 = [-1, 3, -4]
+# clause3 = [1, 3, -4]
+# print(formula.clauses ==[])
+# formula.append(clause1)
+# formula.append(clause2)
+# formula.append(clause3)
+# print(formula.clauses ==[])
 
 assignment = {}
 import os
@@ -22,7 +22,10 @@ cnf1 = CNF()
 cnf1.from_file('./data/uf20-01.cnf')
 print(cnf1.clauses)
 formula = cnf1
+empty = True
 while True:
+    if empty == False:
+        break
     min_level = 10000
     for clause in formula.clauses:
         print(clause)
@@ -34,9 +37,17 @@ while True:
         print(clause)
         if len(clause) == min_level :
             vars = set(clause)
-    for i in vars :
-        dictio[i] =0
-        dictio[-i]=0
+            for i in vars :
+                dictio[i] =0
+
+    # max_length_list = max(formula, key=len)
+    # print(max_length_list)
+    # if min_level < len(max_length_list):
+    #     for i in vars :
+    #         dictio[i] =0
+    # else:
+
+    #         dictio[-i]=0
     for clause in formula.clauses:
         for var in clause:
             if var in dictio:
@@ -60,10 +71,16 @@ while True:
         if key_with_max_value in clause:
             continue
         elif -key_with_max_value in clause :
+            copy_clause =  clause.copy()
+
             clause.remove(-key_with_max_value)
             if clause != []:
-        
+                
                 new_formula.append(clause)
+            else:
+                print("empty clause error")
+                print(copy_clause)
+                empty = False
         else:
             new_formula.append(clause)
     formula = new_formula
@@ -89,6 +106,8 @@ def is_satisfiable(formula, assignment):
         clause_satisfied = False
         for literal in clause:
             variable, polarity = abs(literal), literal > 0
+            if variable not in assignment:
+                assignment[variable]= True
             if assignment[variable] == polarity:
                 clause_satisfied = True
                 break
@@ -96,6 +115,7 @@ def is_satisfiable(formula, assignment):
             return False
     return True
 
+print(is_satisfiable(cnf1.clauses,assignment ))
 
 
 # Specify the number of variables and clauses for the random formula
